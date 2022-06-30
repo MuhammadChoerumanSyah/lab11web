@@ -19,7 +19,7 @@ Untuk mengaktifkan ekstentsi tersebut, melalu XAMPP Control Panel, pada bagian A
 Pada bagian extention, hilangkan tanda ; (titik koma) pada ekstensi yang akan
 diaktifkan. Kemudian simpan kembali filenya dan restart Apache web server.
 
-![img2](/img/imgpraktikum11.2.png)
+![img29](/img/imgpraktikum11.29.png)
 
 ## Instalasi Codeigniter 4
 Untuk melakukan instalasi Codeigniter 4 dapat dilakukan dengan dua cara, yaitu cara manual dan menggunakan composer. Pada praktikum ini kita menggunakan cara manual.
@@ -29,32 +29,34 @@ Untuk melakukan instalasi Codeigniter 4 dapat dilakukan dengan dua cara, yaitu c
 - Ubah nama direktory framework-4.x.xx menjadi ci4.
 - Buka browser dengan alamat http://localhost/lab11_ci/ci4/public/
 
-![img3](/img/imgpraktikum11.3.png)
+![img28](/img/imgpraktikum11.28.png)
 
 ## Menjalankan CLI (Command Line Interface)
 Codeigniter 4 menyediakan CLI untuk mempermudah proses development. Untuk mengakses CLI buka terminal/command prompt.
 
-![img4](/img/imgpraktikum11.4.png)
+![img30](/img/imgpraktikum11.30.png)
 
 Arahkan lokasi direktori sesuai dengan direktori kerja project dibuat
 ```(xampp/htdocs/lab11_ci/ci4/).```
 Perintah yang dapat dijalankan untuk memanggil CLI Codeigniter adalah :
 ```php spark```
-![img5](/img/imgpraktikum11.5.png)
-![img6](/img/imgpraktikum11.6.png)
+![img32](/img/imgpraktikum11.32.png)
 
 ## Mengaktifkan Mode Debugging
 - Ketik ```php spark serve``` pada CLI untuk menjalankan.
-![img7](/img/imgpraktikum11.7.png)
+![img33](/img/imgpraktikum11.33.png)
 
 - Menampilkan pesan error, untuk mencobanya ubah kode file app/Controllers/home.php, hapus ;nya.
 ![img8](/img/imgpraktikum11.8.png)
 
 - Ketik ```http://localhost:8080``` pada browser. Berikut tampilan error nya.
-![img9](/img/imgpraktikum11.9.png)
+![img34](/img/imgpraktikum11.34.png)
 
 - Kemudian, ubah nama file ```env``` menjadi ```.env```. Masuk ke dalam filenya, hapus tanda ```#``` pada ```CI_ENVIRONMENT``` =
-![img10](/img/imgpraktikum11.10.png)
+![img35](/img/imgpraktikum11.35.png)
+- Refresh url sebelumnya, Berikut tampilan error nya.
+![img36](/img/imgpraktikum11.36.png)
+
 
 ## Struktur Direktori
 ![img11](/img/imgpraktikum11.11.png)
@@ -69,16 +71,16 @@ $routes->get('/about', 'Page::about');
 $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
 ```
-
-
 ![img12](/img/imgpraktikum11.12.png)
 
 ## Untuk mengetahui route yang ditambahkan sudah benar, buka CLI dan jalankan perintah berikut.
 
-php spark routes
+```php spark routes```
 ![img13](/img/imgpraktikum11.13.png)
 
 Selanjutnya coba akses route yang telah dibuat dengan mengakses alamat url http://localhost:8080/about
+![img37](/img/imgpraktikum11.37.png)
+
 
 ## Membuat Controller
 Selanjutnya adalah membuat Controller Page. Buat file baru dengan nama ```page.php``` pada direktori Controller kemudian isi kodenya seperti berikut.
@@ -93,21 +95,36 @@ Selanjutnya refresh Kembali browser, maka akan ditampilkan hasilnya yaitu halama
 ![img16](/img/imgpraktikum11.16.png)
 
 Tambahkan method baru pada Controller Page seperti berikut.
-
+```php
 public function tos()
 {
     echo "ini halaman Term of Services";
 }
+```
 ![img17](/img/imgpraktikum11.17.png)
 
 Method ini belum ada pada routing, sehingga cara mengaksesnya dengan menggunakan alamat: http://localhost:8080/page/tos
 ![img18](/img/imgpraktikum11.18.png)
 
 ## Membuat View
-Selanjutnya adalam membuat view untuk tampilan web agar lebih menarik. Buat file baru dengan nama about.php pada direktori view (app/Views/about.php) kemudian isi kodenya seperti berikut.
+Selanjutnya adalam membuat view untuk tampilan web agar lebih menarik. Buat file baru dengan nama about.php pada direktori view ```(app/Views/about.php)``` kemudian isi kodenya seperti berikut.
+```php
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title><?= $title; ?></title>
+    </head>
+    <body>
+        <h1><?= $title; ?></h1>
+        <hr>
+        <p><?= $content; ?></p>
+    </body>
+</html>
+```
 ![img19](/img/imgpraktikum11.19.png)
 
-Ubah method about pada class Controller Page menjadi seperti berikut:
+Ubah ```method about``` pada class ```Controller Page``` menjadi seperti berikut:
 ```php
 public function about()
 {
@@ -117,15 +134,13 @@ public function about()
         ]);
 }
 ```
-
 ![img20](/img/imgpraktikum11.20.png)
 
 Kemudian lakukan refresh pada halaman tersebut.
 ![img21](/img/imgpraktikum11.21.png)
 
 ## Membuat Layout Web dengan CSS
-Buat file css pada direktori public dengan nama style.css (copy file dari praktikum lab4_layout. Kita akan gunakan layout yang pernah dibuat pada praktikum 4.
-![img22](/img/imgpraktikum11.22.png)
+Buat file css pada direktori ```public``` dengan nama ```style.css``` (copy file dari praktikum lab4_layout. Kita akan gunakan layout yang pernah dibuat pada praktikum 4.
 ```css
 /* import google font */
 @import
@@ -434,8 +449,8 @@ border-top:1px solid #eeeeee;
 	float: right;
 }
 ```
-
-Kemudian buat folder template pada direktori view kemudian buat file header.php dan footer.php
+![img22](/img/imgpraktikum11.22.png)
+Kemudian buat folder template pada direktori view kemudian buat file ```header.php``` dan ```footer.php```
 ```php
 <!DOCTYPE html>
 <html lang="en">
@@ -458,13 +473,13 @@ Kemudian buat folder template pada direktori view kemudian buat file header.php 
         <section id="wrapper">
             <section id="main">
 ```
-![img23](/img/imgpraktikum11.23.png)
+File app/view/template/header.php
+![img38](/img/imgpraktikum11.38.png)
 
-File app/view/template/footer.php 
-![img24](/img/imgpraktikum11.24.png)
+File app/view/template/footer.php
+![img39](/img/imgpraktikum11.39.png)
 
-Kemudian ubah file app/view/about.php seperti berikut.
-
+Kemudian ubah file ```app/view/about.php``` seperti berikut.
 ```php
 <?= $this->include('template/header'); ?>
 <h1><?= $title; ?></h1>
@@ -484,7 +499,7 @@ Lengkapi kode program untuk menu lainnya yang ada pada Controller Page, sehingga
 - Ubah isi pada Routes.php menjadi berikut,
 ![img27](/img/imgpraktikum11.27.png)
 
-- Pada Controllers/page.php, menjadi berikut
+- Pada ```Controllers/page.php```, menjadi berikut
 ```php
 <?php
 namespace App\Controllers;
@@ -546,6 +561,202 @@ class Page extends BaseController
     }
 }
 ```
+- Pada masing-masing file di dalam Views, buat file baru denga nama : `rumah.php`,`about.php`,`artikel.php`,`contact.php`,`faqs.php`, dan `tos.php`. Masukan kode dibawah ini ke semua file tersebut
+```php
+    <?= $this->include('template/header'); ?>
+    <h1><?= $title; ?></h1>
+    <hr>
+    <p><?= $content; ?></p>
+    <?= $this->include('template/footer'); ?>
+```
+![img40](/img/imgpraktikum11.40.png)
+
+### Praktikum 12 | Framework Lanjutan (CRUD)
+# 1. Database
+- Jalankan Apache, MySql pada Xampp, Buat database dengan nama lab_ci4 di http://localhost/phpmyadmin.
+- Buat tabel dengan nama artikel.
+```php
+CREATE TABLE artikel (
+    id INT(11) auto_increment,
+    judul VARCHAR(200) NOT NULL,
+    isi TEXT,
+    gambar VARCHAR(200),
+    status TINYINT(1) DEFAULT 0,
+    slug VARCHAR(200),
+    PRIMARY KEY(id)
+);
+```
+![img46](/img/imgpraktikum11.46.png)
+
+# 2. Konfigurasi Koneksi Database
+- Terletak di folder `ci4`, file `.env`, Hapus tanda `#`.
+![img42](/img/imgpraktikum11.42.png)
+
+# 3. Membuat Model
+- Terletak di folder `app/Models`, buat file `ArtikelModel.php`.
+![img43](/img/imgpraktikum11.43.png)
+
+# 4. Membuat Controller
+- Terletak di folder `app/Controllers`, buat file `Artikel.php`.
+```php
+<?php
+namespace App\Controllers;
+use App\Models\ArtikelModel;
+class Artikel extends BaseController
+{
+    public function index()
+    {
+        $title = 'Daftar Artikel';
+        $model = new ArtikelModel();
+        $artikel = $model->findAll();
+        return view('artikel/index', compact('artikel', 'title'));
+    }
+}
+```
+![img44](/img/imgpraktikum11.44.png)
+
+# 5. Membuat View pada artikel
+- Terletak di folder `app/Views/artikel`, buat file `index.php`.
+![img45](/img/imgpraktikum11.45.png)
+
+- Buka browser, ketik http://localhost:8080/artikel 
+![img47](/img/imgpraktikum11.47.png)
+
+- Masukkan data ke tabel artikel
+INSERT INTO artikel (judul, isi, slug) VALUE
+('Artikel pertama', 'Lorem Ipsum adalah contoh teks atau dummy dalam industri 
+percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi 
+standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak 
+dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah 
+buku contoh huruf.', 'artikel-pertama'), 
+('Artikel kedua', 'Tidak seperti anggapan banyak orang, Lorem Ipsum bukanlah 
+teks-teks yang diacak. Ia berakar dari sebuah naskah sastra latin klasik dari 
+era 45 sebelum masehi, hingga bisa dipastikan usianya telah mencapai lebih 
+dari 2000 tahun.', 'artikel-kedua');
+![img48](/img/imgpraktikum11.48.png)
+
+# 6. Membuat Tampilan detail Artikel
+- Terletak di folder `app/Controllers`, edit file `Artikel.php`. Tambah method view().
+![img49](/img/imgpraktikum11.49.png)
+
+7. Membuat View pada Detail
+- Terletak di folder `app/Views/artikel`, buat file `detail.php`.
+![img50](/img/imgpraktikum11.50.png)
+
+8. Membuat Routing untuk artikel detail
+- Terletak di folder `app/Config`, edit file `Routes.php`.
+![img51](/img/imgpraktikum11.51.png)
+
+- Klik `Artikel Kedua` pada http://localhost:8080/artikel, untuk pindah ke detailnya.
+![img52](/img/imgpraktikum11.52.png)
+
+9. Membuat Menu admin
+- Terletak di folder `app/Controller`, edit file `Artikel.php`. Tambah method `admin_index()`.
+![img53](/img/imgpraktikum11.53.png)
+
+- Selanjutnya, akses kembali folder `app/Views/artikel`, buat file `admin_index.php`.
+```php
+<?= $this->include('template/admin_header'); ?>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col">ID</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Status</th>
+            <th scope="col">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if($artikel): foreach($artikel as $row): ?>
+        <tr>
+            <td><?= $row['id']; ?></td>
+            <td>
+                <b><?= $row['judul']; ?></b>
+                <p><small><?= substr($row['isi'], 0, 50); ?></small></p>
+            </td>
+            <td><?= $row['status']; ?></td>
+            <td>
+                <a class="btn btn-primary p-1" href="<?= base_url('/admin/artikel/edit/' . 
+                $row['id']);?>">Ubah</a>
+                <a class="btn btn-danger p-1" onclick="return confirm('Yakin menghapus data?');" href="<?= base_url('/admin/artikel/delete/' . 
+                $row['id']);?>">Hapus</a>
+            </td>
+        </tr>
+        <?php endforeach; else: ?>
+        <tr>
+            <td colspan="4">Belum ada data.</td>
+        </tr>
+        <?php endif; ?>
+    </tbody>
+    <tfoot>
+        <tr class="table-primary">
+            <th scope="col">ID</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Status</th>
+            <th scope="col">Aksi</th>
+        </tr>
+    </tfoot>
+</table>
+<?= $this->include('template/admin_footer'); ?>
+```
+- Buka folder yang ada di `app/Views/artikel/template`, kemudian buat:
+`admin_header.php`
+![img54](/img/imgpraktikum11.54.png)
+
+- `admin_footer.php`
+![img55](/img/imgpraktikum11.55.png)
+
+# 10. Membuat Routing untuk menu admin
+- Terletak di folder `app/Config`, edit file `Routes.php`.
+![img56](/img/imgpraktikum11.56.png)
+
+- Akses browser dengan http://localhost:8080/admin/artikel.
+
+![img57](/img/imgpraktikum11.57.png)
+
+# 11. Menambah data untuk Artikel
+- Terletak di folder `app/Controller`, edit file `Artikel.php`. Tambah method `add()`.
+![img58](/img/imgpraktikum11.58.png)
+
+- Akses kembali folder `app/Views/artikel`, buat file `form_add.php`.
+![img59](/img/imgpraktikum11.59.png)
+
+- Akses browser dengan http://localhost:8080/admin/artikel/add.
+![img60](/img/imgpraktikum11.60.png)
+
+# 12.  Mengubah data pada Artikel
+- Terletak di folder `app/Controller`, edit file `Artikel.php`. Tambah method `edit()`.
+![img61](/img/imgpraktikum11.61.png)
+
+- Akses kembali folder `app/Views/artikel`, buat file `form_edit.php`.
+![img62](/img/imgpraktikum11.62.png)
+
+- Akses browser dengan http://localhost:8080/admin/artikel/edit/1 untuk Mengubah artikel pertama.
+![img63](/img/imgpraktikum11.63.png)
+
+# 13. Menghapus data pada Artikel
+- Terletak di folder app/Controller, edit file Artikel.php. Tambah method delete().
+![img64](/img/imgpraktikum11.64.png)
+
+- Akses browser dengan http://localhost:8080/admin/artikel/add untuk membuat artikel ketiga, lalu kirim.
+![img65](/img/imgpraktikum11.65.png)
+
+- Pergi ke menu admin untuk menghapusnya, http://localhost:8080/admin/artikel, kemudian pilih hapus.
+![img66](/img/imgpraktikum11.66.png)
+
+- Artikel berhasil dihapus.
+![img67](/img/imgpraktikum11.67.png)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

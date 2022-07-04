@@ -6,8 +6,10 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
-use CodeIgniter\Filters\InvalidChars;
-use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\Auth;
+use App\Filters\Noauth;
+//use CodeIgniter\Filters\InvalidChars;
+//use CodeIgniter\Filters\SecureHeaders;
 
 class Filters extends BaseConfig
 {
@@ -21,8 +23,10 @@ class Filters extends BaseConfig
         'csrf'          => CSRF::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
+        'auth'          => Auth::class,
+        'noauth'          => Noauth::class,
+        //'invalidchars'  => InvalidChars::class,
+        //'secureheaders' => SecureHeaders::class,
     ];
 
     /**
@@ -49,11 +53,7 @@ class Filters extends BaseConfig
      * particular HTTP method (GET, POST, etc.).
      *
      * Example:
-     * 'post' => ['foo', 'bar']
-     *
-     * If you use this, you should disable auto-routing because auto-routing
-     * permits any HTTP method to access a controller. Accessing the controller
-     * with a method you don’t expect could bypass the filter.
+     * 'post' => ['csrf', 'throttle']
      *
      * @var array
      */
@@ -68,5 +68,12 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $filters = [];
+
+    public $filters = [
+        'auth' => ['before' =>
+            [
+                'admin/*',
+            ]
+        ]
+    ];
 }

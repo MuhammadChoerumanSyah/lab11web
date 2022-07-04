@@ -747,6 +747,197 @@ dari 2000 tahun.', 'artikel-kedua');
 - Artikel berhasil dihapus.
 ![img67](/img/imgpraktikum11.67.png)
 
+## Praktikum 13 | Framework Lanjutan (Modul Login)
+# 1. Membuat Table User
+- Jalankan Apache, MySql pada Xampp, Akses browser http://localhost/phpmyadmin.
+- Buat tabel dengan nama `artikel`.
+```php
+    CREATE TABLE user (
+    id INT(11) auto_increment,
+    username VARCHAR(200) NOT NULL,
+    useremail VARCHAR(200),
+    userpassword VARCHAR(200),
+    PRIMARY KEY(id)
+    );
+```
+![img68](/img/imgpraktikum11.68.png)
+
+# 2. Membuat Model User
+- Terletak di folder `app/Models`, buat file `UserModel.php`.
+![img69](/img/imgpraktikum11.69.png)
+
+# 3. Membuat Controller User
+- Terletak di folder `app/Controllers`, buat file `User.php`.
+```php
+<?php
+
+namespace App\Controllers;
+use App\Models\UserModel;
+class User extends BaseController
+{
+    public function index() 
+    {
+        $title = 'Daftar User';
+        $model = new UserModel();
+        $users = $model->findAll();
+        return view('user/index', compact('users', 'title'));
+    }
+
+    public function login()
+    {
+        helper(['form']);
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        if (!$email)
+        {
+            return view('user/login');
+        }
+
+        $session = session();
+        $model = new UserModel();
+        $login = $model->where('useremail', $email)->first();
+        if ($login)
+        {
+            $pass = $login['userpassword'];
+            if (password_verify($password, $pass))
+            {
+                $login_data = [
+                    'user_id' => $login['id'],
+                    'user_name' => $login['username'],
+                    'user_email' => $login['useremail'],
+                    'logged_in' => TRUE,
+                ];
+                $session->set($login_data);
+                return redirect('admin/artikel');
+            }
+            else
+            {
+                $session->setFlashdata("flash_msg", "Password salah.");
+                return redirect()->to('/user/login');
+            }
+        }
+
+        else
+        {
+            $session->setFlashdata("flash_msg", "email tidak terdaftar.");
+            return redirect()->to('/user/login');
+        }
+    }
+
+    public function logout() 
+    {
+        session()->destroy();
+        return redirect()->to('/user/login');
+    }
+}
+```
+![img70](/img/imgpraktikum11.70.png)
+
+# 4. Membuat View Login
+- Terletak di folder `app/Views`, buat folder baru dengan nama `user`, buat file `login.php` di dalamnya.
+![img71](/img/imgpraktikum11.71.png)
+
+# 5. Membuat Database Seeder
+- Untuk keperluan uji coba.
+- Masuk ke direktori ci4, kemudian ketikkan kode: `php spark make:seeder UserSeeder`
+![img72](/img/imgpraktikum11.72.png)
+
+- Terletak di folder `app/Database/Seeds`, buka file `UserSeeder.php`, kemudian edit menjadi berikut:
+![img73](/img/imgpraktikum11.73.png)
+
+- Buka kembali CLI, kemudian ketik perintah berikut: php spark db:seed UserSeeder
+![img74](/img/imgpraktikum11.74.png)
+
+- Berikut data yang sudah ditambah pada tabel user. Dengan mengakses http://localhost/phpmyadmin.
+![img75](/img/imgpraktikum11.75.png)
+
+- Buka file `.env`, kemudian hapus # pada `app.sessionX`
+![img76](/img/imgpraktikum11.76.png)
+
+- Akses kembali url `http://localhost:8080/user/login`
+![img77](/img/imgpraktikum11.77.png)
+
+# 6. Menambah Auth Filter
+- Terletak di folder app/Filters, buat file Auth.php
+![img78](/img/imgpraktikum11.78.png)
+
+- Kemudian pada folder `app/Config`, edit isi file `Filters.php` menjadi berikut:
+![img79](/img/imgpraktikum11.79.png)
+![img80](/img/imgpraktikum11.80.png)
+![img81](/img/imgpraktikum11.81.png)
+
+- Untuk mencobanya, akses `http://localhost:8080/admin/artikel` lalu tekan enter.
+![img82](/img/imgpraktikum11.82.png)
+
+- Otomatis akan dialihkan untuk login terlebih dahulu.
+
+- Mencoba masuk dengan email `admin@email.com`, dan password `admin123`, kemudian tekan login.
+![img83](/img/imgpraktikum11.83.png)
+
+- Berhasil masuk sebagai admin, dan semua menu dapat diakses.Untuk mencobanya klik menu `Artikel`.
+![img84](/img/imgpraktikum11.84.png)
+
+- Kemudian klik menu Login Admin, untuk diarahkan ke http://localhost:8080/admin/artikel.
+
+# Praktikum 14 | Pagination dan Pencarian
+
+# 1. Membuat Pagination
+- Terletak di folder app/Controllers, buka file Artikel.php. Ubah menjadi berikut :
+![img85](/img/imgpraktikum11.85.png)
+
+- Terletak di folder app/Views/artikel, buka file admin_index.php, tambah kode berikut : <?= $pager->links(); ?>
+![img86](/img/imgpraktikum11.86.png)
+
+- Buka kembali teks editor (VScode), ubah isi file .env menjadi berikut :
+![img87](/img/imgpraktikum11.87.png)
+
+- Akses kembali http://localhost:8080/admin/artikel. Menampilkan artikel maksimal 4 per halaman.
+![img88](/img/imgpraktikum11.88.png)
+
+# 2. Membuat Pencarian
+- Terletak di folder app/Controllers, buka file Artikel.php. Ubah menjadi berikut :
+![img89](/img/imgpraktikum11.89.png)
+
+- Terletak di folder app/Views/artikel, buka file admin_index.php. Ubah menjadi berikut
+![img90](/img/imgpraktikum11.90.png)
+
+- Juga berikut:
+![img91](/img/imgpraktikum11.91.png)
+
+- Akses kembali `http://localhost:8080/admin/artikel`. Kemudian ketik artikel yang akan di cari, selanjutnya tekan `cari`.
+
+- Proses mencari artikel `Artikel kedua`
+
+- Artikel ditemukan.
+![img92](/img/imgpraktikum11.92.png)
+
+
+# 3. Upload Gambar
+- Terletak di folder `app/Controllers`, buka file `Artikel.php`. Ubah menjadi berikut :
+![img93](/img/imgpraktikum11.93.png)
+
+- Terletak di folder `app/Views/artikel`, buka file `form_add.php`. Ubah menjadi berikut :
+![img94](/img/imgpraktikum11.94.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
